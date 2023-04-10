@@ -39,14 +39,24 @@ const AuthenticatedView = () => {
         Accounts you may follow
       </Typography.Heading>
       <Layout.Grid className="grid-cols-1 sm:grid-cols-3 md:grid-cols-5 gap-2">
-        {data&&
-          data.map((item,index) => (
+        {data &&
+          data.map((item, index) => (
             <Layout.Card className="p-4" key={index}>
               <Layout.Col className="gap-2">
                 <Layout.Row className="items-center gap-2">
-                {item.user.image ? <Image src={item.user.image} width={50} height={50} loader={imageLoader} className="bg-general rounded-full"/>:<Avatar name={item.user.name} />}
-                  <Typography>{item.user.name}</Typography>
+                  {item.user.image ? (
+                    <Image
+                      src={item.user.image}
+                      width={50}
+                      height={50}
+                      loader={imageLoader}
+                      className="bg-general rounded-full aspect-square object-cover object-top"
+                    />
+                  ) : (
+                    <Avatar name={item.user.name} />
+                  )}
                 </Layout.Row>
+                <Typography className="font-bold">{item.user.name}</Typography>
                 <Link href={`/profile/${item.user._id}`} className="w-full">
                   <Button className="btn-outlined-general btn-sm text-xs w-full">
                     View Profile

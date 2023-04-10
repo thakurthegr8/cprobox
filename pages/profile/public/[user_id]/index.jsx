@@ -6,7 +6,9 @@ import useFetch from "@/src/hooks/useFetch";
 import withSessionPage from "@/src/middleware/withSessionPage";
 import withUrl from "@/src/middleware/withUrl";
 import { AuthContext } from "@/src/providers/AuthProvider";
+import { imageLoader } from "@/src/utils/image";
 import axios from "axios";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useContext } from "react";
@@ -36,16 +38,26 @@ const ProfilePage = (props) => {
           <Layout.Col className="gap-2">
             <Layout.Row>
               <Layout.Row className="items-start gap-2">
-                <Avatar name={data.name} />
+              {data?.image ? (
+                  <Image
+                    src={data.image}
+                    width={100}
+                    height={100}
+                    loader={imageLoader}
+                    className="bg-general rounded-full aspect-square object-cover object-top"
+                  />
+                ) : (
+                  <Avatar name={data.name} />
+                )}
                 <Layout.Col>
                   <Typography.Title className="font-bold">
                     {data.name}
                   </Typography.Title>
-                </Layout.Col>
-              </Layout.Row>
               <Layout.Row className="h-full w-full">
                 <Button>Followers {data.followers.length}</Button>
                 <Button>Following {data.following.length}</Button>
+              </Layout.Row>
+                </Layout.Col>
               </Layout.Row>
             </Layout.Row>
             <Layout.Row></Layout.Row>

@@ -60,16 +60,16 @@ const ProfilePage = (props) => {
                     width={100}
                     height={100}
                     loader={imageLoader}
-                    className="bg-general rounded-full"
+                    className="bg-general rounded-full aspect-square object-cover object-top"
                   />
                 ) : (
                   <Avatar name={data.name} />
                 )}
-                <Layout.Col className="justify-center h-full">
+                <Layout.Col className="justify-center">
                   <Typography.Title className="font-bold">
                     {data.name}
                   </Typography.Title>
-                  <Layout.Row className="h-full w-full">
+                  <Layout.Row className="w-full">
                     <Link href={`/profile/${data._id}/followers`}>
                       <Button>Followers {data.followers.length}</Button>
                     </Link>

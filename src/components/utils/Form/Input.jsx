@@ -15,4 +15,8 @@ const Input = (props) => {
   );
 };
 
+Input.defaultProps = {
+  value: "",
+};
+
 export default Input;

@@ -1,6 +1,9 @@
 import React, { createContext, useEffect, useState } from "react";
 import { getAuth, signOut } from "@/src/services/auth";
 import { useRouter } from "next/router";
+import Layout from "@/src/components/utils/Layout";
+import { BarLoader } from "react-spinners";
+
 
 export const AuthContext = createContext(null);
 
@@ -32,7 +35,7 @@ const AuthProvider = (props) => {
   useEffect(() => {
     setAuth();
   }, []);
-  if (loading) return <>Loading</>;
+  if (loading) return <Layout.Col className="w-full h-[100vh] items-center justify-center"><BarLoader loading={loading} color="#000"/></Layout.Col>;
   return (
     <AuthContext.Provider
       value={{ loggedIn, setLoggedIn, user, setUser, signout }}

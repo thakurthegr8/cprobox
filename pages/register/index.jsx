@@ -16,6 +16,8 @@ export default function Register() {
   const router = useRouter();
   const onSubmitRegsitrationData = async (data) => {
     try {
+      if (data.password !== data.confirm_password)
+        throw new Error("passwords are not matching");
       const register = await registerWithEmail(data);
       router.push("/login");
     } catch (error) {
