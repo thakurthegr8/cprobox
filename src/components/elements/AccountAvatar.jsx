@@ -5,6 +5,8 @@ import LogOutIcon from "@heroicons/react/20/solid/ArrowLeftOnRectangleIcon";
 import Typography from "@/src/components/utils/Typography";
 import Layout from "../utils/Layout";
 import Link from "next/link";
+import Image from "next/image";
+import { imageLoader } from "@/src/utils/image";
 
 export const Avatar = (props) => {
   const initial = props.name
@@ -26,13 +28,13 @@ const AccountAvatar = () => {
     <>
       <Menu className="relative z-10" as="div">
         <Menu.Button>
-          <Avatar name={name} />
+        {auth.user?.image !== null ? <Image src={auth.user.image} width={50} height={50} loader={imageLoader} className="bg-general rounded-full"/>:<Avatar name={name} />}
         </Menu.Button>
         <Menu.Items className="absolute w-72 right-0 bg-white border rounded-xl shadow-md flex-col overflow-hidden">
           <Menu.Item>
             <Link href="/me">
               <Layout.Row className="p-2 gap-2 items-center border-b">
-                <Avatar name={name} />
+                {auth.user?.image !== null ? <Image src={auth.user.image} width={50} height={50} loader={imageLoader} className="bg-general rounded-full"/>:<Avatar name={name} />}
                 <Typography.Heading className="font-bold">
                   {name}
                 </Typography.Heading>

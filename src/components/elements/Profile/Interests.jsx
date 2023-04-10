@@ -67,7 +67,7 @@ const Interests = () => {
 
   return (
     <Layout.Card className="p-4">
-      <Layout.Col>
+      <Layout.Col className="gap-2">
         <Layout.Row className="justify-between items-center">
           <Typography.Heading className="font-bold">Interests</Typography.Heading>
           <Button className="btn-primary" onClick={() => setOpen(true)}>

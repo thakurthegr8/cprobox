@@ -7,6 +7,8 @@ import Link from "next/link";
 import { AuthContext } from "@/src/providers/AuthProvider";
 import useFetch from "@/src/hooks/useFetch";
 import { Avatar } from "@/src/components/elements/AccountAvatar";
+import { imageLoader } from "@/src/utils/image";
+import Image from "next/image";
 
 const UnauthenticatedView = () => {
   return (
@@ -42,7 +44,7 @@ const AuthenticatedView = () => {
             <Layout.Card className="p-4" key={index}>
               <Layout.Col className="gap-2">
                 <Layout.Row className="items-center gap-2">
-                  <Avatar name={item.user.name} />
+                {item.user.image ? <Image src={item.user.image} width={50} height={50} loader={imageLoader} className="bg-general rounded-full"/>:<Avatar name={item.user.name} />}
                   <Typography>{item.user.name}</Typography>
                 </Layout.Row>
                 <Link href={`/profile/${item.user._id}`} className="w-full">

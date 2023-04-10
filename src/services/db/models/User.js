@@ -1,5 +1,5 @@
 import mongoose, { model, Schema } from "mongoose";
-import bcrypt from "bcrypt"
+import bcrypt from "bcrypt";
 const UserSchema = new Schema(
   {
     name: {
@@ -15,6 +15,10 @@ const UserSchema = new Schema(
       type: Schema.Types.String,
       required: true,
     },
+    image: {
+      type: Schema.Types.String,
+      default: null,
+    },
     verified: {
       type: Schema.Types.Boolean,
       default: false,
@@ -23,10 +27,10 @@ const UserSchema = new Schema(
   { timestamps: true }
 );
 
-UserSchema.pre('save', async function(next) {
+UserSchema.pre("save", async function (next) {
   const user = this;
 
-  if (!user.isModified('password')) {
+  if (!user.isModified("password")) {
     return next();
   }
 
@@ -40,7 +44,7 @@ UserSchema.pre('save', async function(next) {
   }
 });
 
-UserSchema.pre('findOneAndUpdate', async function(next) {
+UserSchema.pre("findOneAndUpdate", async function (next) {
   const update = this.getUpdate();
   if (!update.password) {
     return next();
