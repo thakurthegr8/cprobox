@@ -52,12 +52,13 @@ const GeneralInfo = () => {
           { withCredentials: true }
         );
         const res = await req.data;
-        if (res) auth.setUser(res);
+        if (res) {
+          router.reload();
+          auth.setUser(res);
+        }
       }
     } catch (error) {
       console.log(error);
-    } finally {
-      router.reload();
     }
   };
   return (
