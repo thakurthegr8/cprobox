@@ -53,8 +53,7 @@ const GeneralInfo = () => {
         );
         const res = await req.data;
         if (res) {
-          router.reload();
-          auth.setUser(res);
+          auth.setUser({...auth.user, image:currentImage});
         }
       }
     } catch (error) {
@@ -65,7 +64,7 @@ const GeneralInfo = () => {
     <Layout.Card className="p-4">
       <Layout.Row className="gap-2">
         <Layout.Col className="justify-center items-center bg-primary aspect-square rounded-full w-36 h-36 relative">
-          {!image && !auth.user.image && <Avatar name={auth.user.name} />}
+          {(!image && !auth.user.image) && <Avatar name={auth.user.name} />}
           {!image && auth.user.image && (
             <Layout.Col className="overflow-hidden rounded-full h-full w-full justify-center items-center">
               {image && (

@@ -6,9 +6,7 @@ import Layout from "@/src/components/utils/Layout";
 import Page from "@/src/components/utils/Page";
 import Typography from "@/src/components/utils/Typography";
 import Link from "next/link";
-import {
-  signInWithEmailAndPassword,
-} from "@/src/services/auth";
+import { signInWithEmailAndPassword } from "@/src/services/auth";
 import Dialog from "@/src/components/utils/Dialogs";
 import Confirm from "@/src/components/utils/Dialogs/Confirm";
 import OTPVerification from "@/src/components/elements/OTPVerification";
@@ -18,11 +16,16 @@ import { AuthContext } from "@/src/providers/AuthProvider";
 export default function Login() {
   const { setUser, setLoggedIn } = useContext(AuthContext);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const onSubmitLoginData = async (data) => {
     setError(null);
     try {
-      const login = await signInWithEmailAndPassword(data?.email, data?.password);
+      setLoading(true);
+      const login = await signInWithEmailAndPassword(
+        data?.email,
+        data?.password
+      );
       console.log(login);
       setUser(login);
       setLoggedIn(true);
@@ -33,6 +36,8 @@ export default function Login() {
         router.push(`/verify?email=${data?.email}`);
       }
       setError(errorMessage);
+    }finally{
+      setLoading(false)
     }
   };
   return (
@@ -61,7 +66,7 @@ export default function Login() {
                       label="Password"
                       required
                     />
-                    <Button className="btn-primary btn-sm">Submit</Button>
+                    <Button className="btn-primary btn-sm" disabled={loading}>Submit</Button>
                     <Typography.Caption className="text-red-500 capitalize">
                       {error}
                     </Typography.Caption>
