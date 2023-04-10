@@ -11,6 +11,7 @@ import Image from "next/image";
 import File from "../../utils/Form/File";
 import dynamic from "next/dynamic";
 import { imageLoader } from "@/src/utils/image";
+import { useRouter } from "next/router";
 const Pencil = dynamic(
   import("@iconscout/react-unicons/icons/uil-pen").then((mod) => mod.default),
   { ssr: false }
@@ -19,6 +20,7 @@ const Pencil = dynamic(
 const GeneralInfo = () => {
   const auth = useContext(AuthContext);
   const profile = useContext(ProfileContext);
+  const router = useRouter();
   const [image, setImage] = useState(null);
   const uploadImage = async (imageBlob) => {
     if (imageBlob === null) throw new Error("please select image");
@@ -39,18 +41,23 @@ const GeneralInfo = () => {
   };
   const onSubmitImage = async (value) => {
     const currentImage = URL.createObjectURL(value[0]);
-    setImage(currentImage);
     try {
       const { secure_url } = await uploadImage(value[0]);
       if (secure_url) {
-        const req = await axios.post("/api/auth/update/profile_image", {
-          image: secure_url,
-        });
+        const req = await axios.post(
+          "/api/auth/update/profile_image",
+          {
+            image: secure_url,
+          },
+          { withCredentials: true }
+        );
         const res = await req.data;
         if (res) auth.setUser(res);
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      router.reload();
     }
   };
   return (
